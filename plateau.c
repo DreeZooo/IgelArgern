@@ -37,6 +37,7 @@ char board_pop(board_t* b, int line, int row){
     }
     return sortant;
 }
+
 int board_height(board_t* b, int line, int row){
     casePlateau* cellule = &b -> tableau[line][row];
     int hauteur = 0;
@@ -47,4 +48,16 @@ int board_height(board_t* b, int line, int row){
         exit(3);
     }
     return hauteur;
+}
+
+char board_top(board_t* b, int line, int row){
+    casePlateau* cellule = &b -> tableau[line][row];
+    char equipe;
+    if(cellule -> sommet > 0){
+        equipe = cellule -> pile[cellule -> sommet-1];
+    }else{
+        printf("Erreur : Pas de herissons dans cette case");
+        exit(3);
+    }
+    return equipe;
 }

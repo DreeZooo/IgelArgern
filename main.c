@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "plateau.h"
-#include "plateau.c"
 
 
 // TODO Renommage de aux 
@@ -9,5 +8,5 @@
 // Faire le makeFile
 
 int main(){
-    printf("Hello");
+    printf("Hello \n");
 }

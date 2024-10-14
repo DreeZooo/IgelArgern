@@ -4,6 +4,9 @@
 #include "plateau.c"
 
 
+// TODO Renommage de aux 
+// Corriger les autres fonctions
+// Faire le makeFile
 
 int main(){
     struct casePlateau c = {.pile = {'aaa'}, .sommet = 2};

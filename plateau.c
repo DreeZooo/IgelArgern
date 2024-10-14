@@ -61,3 +61,15 @@ char board_top(board_t* b, int line, int row){
     }
     return equipe;
 }
+
+char board_peek(board_t* b, int line, int row, int pos){
+    casePlateau* cellule = &b -> tableau[line][row];
+    char equipe;
+    if (cellule -> sommet-pos-1 >= 0){
+        equipe = cellule -> pile[cellule -> sommet-pos-1];
+    }else{
+        printf("Erreur : Pas de herissons dans cette position");
+        exit(4);
+    }
+    return equipe;
+}

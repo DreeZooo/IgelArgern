@@ -8,18 +8,24 @@ struct casePlateau{
 };
 
 struct board{
-    casePlateau tableau[TAILLE_TABLEAU_LIGNE][TAILLE_TABLEAU_COLONNE];
+    struct casePlateau tableau[TAILLE_TABLEAU_LIGNE][TAILLE_TABLEAU_COLONNE];
 };
 
 
 //Initialiser le plateau ????
 
+//Fonction auxiliaire 
+casePlateau* aux(board_t* b, int line, int row) {
+    return &(b -> tableau[line][row]);
+    exit(550);
+}
+
+/*
 void board_push(board_t* b, int line, int row, char ctn){
-    casePlateau* cellule = &b -> tableau[line][row];
-    
-    if (cellule -> sommet < TAILLE_MAX_PILE_HERISSON){
-    cellule ->pile[cellule->sommet] = ctn;
-    cellule -> sommet++;
+    casePlateau* cell = aux(b, line, row);
+    if (cell -> sommet < TAILLE_MAX_PILE_HERISSON){
+    cell->pile[cell->sommet] = ctn;
+    cell -> sommet++;
     }else{
         printf("Erreur dépassement de la pile");
         exit(1);
@@ -61,3 +67,4 @@ char board_top(board_t* b, int line, int row){
     }
     return equipe;
 }
+*/

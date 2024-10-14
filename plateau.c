@@ -11,7 +11,6 @@ struct board{
     struct casePlateau tableau[TAILLE_TABLEAU_LIGNE][TAILLE_TABLEAU_COLONNE];
 };
 
-
 casePlateau* get_cell(board_t* b, int line, int row) {
     return &(b -> tableau[line][row]);
 }
@@ -42,14 +41,14 @@ char board_pop(board_t* b, int line, int row){
 
 int board_height(board_t* b, int line, int row){
     casePlateau* cell = get_cell(b, line, row);
-    int hauteur = 0;
+    int height = 0;
     if(cell->sommet >= 0){
-        hauteur = cell -> sommet;
+        height = cell -> sommet;
     }else{
         printf("La pile n'a pas de taille\n");
         exit(3);
     }
-    return hauteur;
+    return height;
 }
 
 char board_top(board_t* b, int line, int row){
@@ -77,4 +76,3 @@ char board_peek(board_t* b, int line, int row, int pos){
     }
     return team_at_pos;
 }
-

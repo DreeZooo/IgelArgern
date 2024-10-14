@@ -31,6 +31,10 @@ void test_board_peek(board_t* board, int line, int row, int pos){
     printf("String at the position %d :  %c\n" , pos, result);
 }
 
+void test_board_cell_print(board_t* board, int line, int row, int slice){
+    cell_print(board, line, row, slice);
+}
+
 void run_tests() {
     board_t* board = malloc(sizeof(board_t));
 
@@ -61,13 +65,18 @@ void run_tests() {
     test_board_peek(board,0, 0, 0);
     test_board_peek(board,0, 0, 1);
     test_board_peek(board,0, 0, 2);
-    test_board_peek(board,0, 0, 3);
+
+    printf("----------Test of cell----------\n");
+    test_board_cell_print(board, 0, 0, 0);
+    test_board_cell_print(board, 0, 0, 1);
+    test_board_cell_print(board, 0, 0, 2);
+    test_board_cell_print(board, 0, 0, 3);
+
 
 
     free(board);
 }
-
-int main() {
+int main(){
     run_tests();
     return 0;
 }

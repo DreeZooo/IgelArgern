@@ -11,7 +11,7 @@ main.o : main.c plateau.h
 plateau.o : plateau.c plateau.h
 	gcc $(CFLAGS) -c $<
 
-testUnitaire.o : testUnitaire.c plateau.h
+testUnitaire.o : testUnitaire.c testUnitaire.h
 	gcc $(CFLAGS) -c $<
 
 clean : 

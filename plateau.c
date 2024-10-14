@@ -12,17 +12,12 @@ struct board{
 };
 
 
-//Initialiser le plateau ????
-
-//Fonction auxiliaire 
-casePlateau* aux(board_t* b, int line, int row) {
+casePlateau* get_cell(board_t* b, int line, int row) {
     return &(b -> tableau[line][row]);
-    exit(550);
 }
 
-/*
 void board_push(board_t* b, int line, int row, char ctn){
-    casePlateau* cell = aux(b, line, row);
+    casePlateau* cell = get_cell(b, line, row);
     if (cell -> sommet < TAILLE_MAX_PILE_HERISSON){
     cell->pile[cell->sommet] = ctn;
     cell -> sommet++;
@@ -33,10 +28,11 @@ void board_push(board_t* b, int line, int row, char ctn){
 }
 
 char board_pop(board_t* b, int line, int row){
-    casePlateau* cellule = &b -> tableau[line][row];
+    casePlateau* cell = get_cell(b, line, row);
     char sortant;
-    if(cellule -> sommet > 0){
-        sortant = cellule -> pile[cellule -> sommet-1];
+    if(cell -> sommet > 0){
+        sortant = cell -> pile[cell -> sommet - 1];
+        cell -> sommet--;
     }else{
         printf("Erreur : Impossible d'enlever un herisson car aucun dans la pile");
         exit(2);
@@ -45,10 +41,10 @@ char board_pop(board_t* b, int line, int row){
 }
 
 int board_height(board_t* b, int line, int row){
-    casePlateau* cellule = &b -> tableau[line][row];
+    casePlateau* cell = get_cell(b, line, row);
     int hauteur = 0;
-    if(cellule->sommet >= 0){
-        hauteur = cellule -> sommet;
+    if(cell->sommet >= 0){
+        hauteur = cell -> sommet;
     }else{
         printf("La pile n'a pas de taille");
         exit(3);
@@ -57,14 +53,13 @@ int board_height(board_t* b, int line, int row){
 }
 
 char board_top(board_t* b, int line, int row){
-    casePlateau* cellule = &b -> tableau[line][row];
+    casePlateau* cell = get_cell(b, line, row);
     char equipe;
-    if(cellule -> sommet > 0){
-        equipe = cellule -> pile[cellule -> sommet-1];
+    if(cell -> sommet > 0){
+        equipe = cell -> pile[cell -> sommet-1];
     }else{
         printf("Erreur : Pas de herissons dans cette case");
         exit(3);
     }
     return equipe;
 }
-*/

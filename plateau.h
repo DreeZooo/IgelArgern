@@ -8,6 +8,7 @@
 typedef struct casePlateau casePlateau;
 typedef struct board board_t;
 
+board_t* create_board();
 casePlateau* get_cell(board_t* b, int line, int row);
 void board_push(board_t* b, int line, int row, char ctn);
 char board_pop(board_t* b, int line, int row);

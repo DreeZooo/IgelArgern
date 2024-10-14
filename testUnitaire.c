@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "plateau.h"
 #include "testUnitaire.h"
-#include "plateau.c"
 
 
 void test_board_push(board_t* board, int line, int row, char ctn) {
@@ -35,9 +34,7 @@ void test_board_cell_print(board_t* board, int line, int row, int slice){
     cell_print(board, line, row, slice);
 }
 
-void run_tests() {
-    board_t* board = malloc(sizeof(board_t));
-
+void run_tests(board_t* board) {
     printf("----------Test of push----------\n");
     test_board_push(board, 0, 0, 'A');
     test_board_push(board, 0, 0, 'B');
@@ -71,12 +68,4 @@ void run_tests() {
     test_board_cell_print(board, 0, 0, 1);
     test_board_cell_print(board, 0, 0, 2);
     test_board_cell_print(board, 0, 0, 3);
-
-
-
-    free(board);
-}
-int main(){
-    run_tests();
-    return 0;
 }

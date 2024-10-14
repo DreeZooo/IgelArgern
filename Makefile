@@ -2,7 +2,7 @@ LDFLAGS =-g
 CFLAGS = -Wall -Wextra -Wno-unused-parameter
 CFLAGS := $(CFLAGS) -Werror
 
-program : main.o plateau.o
+program : main.o plateau.o testUnitaire.o
 	gcc $(LDFLAGS) $^ -o $@
 
 main.o : main.c plateau.h

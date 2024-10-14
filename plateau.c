@@ -15,6 +15,19 @@ casePlateau* get_cell(board_t* b, int line, int row) {
     return &(b -> tableau[line][row]);
 }
 
+board_t* create_board() {
+    board_t* board = (board_t*)malloc(sizeof(board_t));
+    if (board) {
+        for (int i = 0; i < TAILLE_TABLEAU_LIGNE; ++i) {
+            for (int j = 0; j < TAILLE_TABLEAU_COLONNE; ++j) {
+                board->tableau[i][j].sommet = 0;
+            }
+        }
+    }
+    return board;
+}
+
+
 void board_push(board_t* b, int line, int row, char ctn){
     casePlateau* cell = get_cell(b, line, row);
     if (cell -> sommet < TAILLE_MAX_PILE_HERISSON){
@@ -76,3 +89,6 @@ char board_peek(board_t* b, int line, int row, int pos){
     }
     return team_at_pos;
 }
+
+void cell_print(board_t* b, int line, int row, int slice){}
+void board_print(board_t* b, int highlighted_line){}

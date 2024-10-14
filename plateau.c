@@ -8,68 +8,136 @@ struct casePlateau{
 };
 
 struct board{
-    casePlateau tableau[TAILLE_TABLEAU_LIGNE][TAILLE_TABLEAU_COLONNE];
+    struct casePlateau tableau[TAILLE_TABLEAU_LIGNE][TAILLE_TABLEAU_COLONNE];
 };
 
+casePlateau* get_cell(board_t* b, int line, int row) {
+    return &(b -> tableau[line][row]);
+}
 
-//Initialiser le plateau ????
+board_t* create_board() {
+    board_t* board = (board_t*)malloc(sizeof(board_t));
+    if (board) {
+        for (int i = 0; i < TAILLE_TABLEAU_LIGNE; ++i) {
+            for (int j = 0; j < TAILLE_TABLEAU_COLONNE; ++j) {
+                board->tableau[i][j].sommet = 0;
+            }
+        }
+    }
+    return board;
+}
+
 
 void board_push(board_t* b, int line, int row, char ctn){
-    casePlateau* cellule = &b -> tableau[line][row];
-    
-    if (cellule -> sommet < TAILLE_MAX_PILE_HERISSON){
-    cellule ->pile[cellule->sommet] = ctn;
-    cellule -> sommet++;
+    casePlateau* cell = get_cell(b, line, row);
+    if (cell -> sommet < TAILLE_MAX_PILE_HERISSON){
+    cell->pile[cell->sommet] = ctn;
+    cell -> sommet++;
     }else{
-        printf("Erreur dépassement de la pile");
+        printf("Erreur dépassement de la pile\n");
         exit(1);
     }
 }
 
 char board_pop(board_t* b, int line, int row){
-    casePlateau* cellule = &b -> tableau[line][row];
+    casePlateau* cell = get_cell(b, line, row);
     char sortant;
-    if(cellule -> sommet > 0){
-        sortant = cellule -> pile[cellule -> sommet-1];
+    if(cell -> sommet > 0){
+        sortant = cell -> pile[cell -> sommet - 1];
+        cell -> sommet--;
     }else{
-        printf("Erreur : Impossible d'enlever un herisson car aucun dans la pile");
+        printf("Erreur : Impossible d'enlever un herisson car aucun dans la pile\n");
         exit(2);
     }
     return sortant;
 }
 
 int board_height(board_t* b, int line, int row){
-    casePlateau* cellule = &b -> tableau[line][row];
-    int hauteur = 0;
-    if(cellule->sommet >= 0){
-        hauteur = cellule -> sommet;
+    casePlateau* cell = get_cell(b, line, row);
+    int height = 0;
+    if(cell->sommet >= 0){
+        height = cell -> sommet;
     }else{
-        printf("La pile n'a pas de taille");
+        printf("La pile n'a pas de taille\n");
         exit(3);
     }
-    return hauteur;
+    return height;
 }
 
 char board_top(board_t* b, int line, int row){
-    casePlateau* cellule = &b -> tableau[line][row];
-    char equipe;
-    if(cellule -> sommet > 0){
-        equipe = cellule -> pile[cellule -> sommet-1];
+    casePlateau* cell = get_cell(b, line, row);
+    char team;
+    if(cell -> sommet > 0){
+        team = cell -> pile[cell -> sommet -1 ];
     }else{
-        printf("Erreur : Pas de herissons dans cette case");
-        exit(3);
-    }
-    return equipe;
-}
-
-char board_peek(board_t* b, int line, int row, int pos){
-    casePlateau* cellule = &b -> tableau[line][row];
-    char equipe;
-    if (cellule -> sommet-pos-1 >= 0){
-        equipe = cellule -> pile[cellule -> sommet-pos-1];
-    }else{
-        printf("Erreur : Pas de herissons dans cette position");
+        printf("Erreur : Pas de herissons dans cette case\n");
         exit(4);
     }
-    return equipe;
+    return team;
 }
+
+//Pos 0 = top 
+char board_peek(board_t* b, int line, int row, int pos){
+    casePlateau* cell = get_cell(b, line, row);
+    char team_at_pos;
+    int height_stack = board_height(b, line, row);
+    if(cell -> sommet > 0 && pos < height_stack){
+        team_at_pos = cell -> pile[cell -> sommet - 1 - pos];
+    }else{
+        printf("Erreur : Pas de herissons à cette position dans la case\n");
+        exit(5);
+    }
+    return team_at_pos;
+}
+
+//slice = 0 -> bord nord, slice = 1 -> la ligne de contenu du haut, etc.
+/*
+void cell_print(board_t* b, int line, int row, int slice){
+    switch (slice)
+    {
+    case 0:
+        printf(" --- ");
+        break;
+    case 1:
+        printf("|%s%s%s|", board_top(b, line, row));
+        break;
+    case 2:
+        printf("");
+    default:
+        break;
+    }
+
+}
+
+
+void board_print(board_t* b, int highlighted_line){
+    int i, j;
+    for (i = 0; i < TAILLE_TABLEAU_LIGNE; i++){
+        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
+            printf("  %s\n  ", 'a' + j);
+        }
+        printf("\n");
+        printf("   ");
+        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
+            cell_print(b, i, j, 0);
+        }
+        printf("\n");
+        printf("   ");
+        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
+            cell_print(b, i, j, 1);
+        }
+        printf("\n");
+        printf(" %d ", i);
+        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
+            cell_print(b, i, j, 2);
+        }
+        printf("\n");
+        printf("   ");
+        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
+            cell_print(b, i, j, 3);
+        }
+    }
+    
+}
+
+*/

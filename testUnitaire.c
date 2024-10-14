@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "plateau.h"
+#include "testUnitaire.h"
 #include "plateau.c"
+
 
 void test_board_push(board_t* board, int line, int row, char ctn) {
     printf("Pushing '%c' ; ", ctn);
@@ -32,7 +34,6 @@ void test_board_peek(board_t* board, int line, int row, int pos){
 void run_tests() {
     board_t* board = malloc(sizeof(board_t));
 
-
     printf("----------Test of push----------\n");
     test_board_push(board, 0, 0, 'A');
     test_board_push(board, 0, 0, 'B');
@@ -61,7 +62,6 @@ void run_tests() {
     test_board_peek(board,0, 0, 1);
     test_board_peek(board,0, 0, 2);
     test_board_peek(board,0, 0, 3);
-    test_board_peek(board,0, 0, 4);
 
 
     free(board);

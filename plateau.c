@@ -70,8 +70,7 @@ char board_top(board_t* b, int line, int row){
     if(cell -> sommet > 0){
         team = cell -> pile[cell -> sommet -1 ];
     }else{
-        printf("Erreur : Pas de herissons dans cette case\n");
-        exit(4);
+        team = '0';
     }
     return team;
 }
@@ -84,14 +83,13 @@ char board_peek(board_t* b, int line, int row, int pos){
     if(cell -> sommet > 0 && pos < height_stack){
         team_at_pos = cell -> pile[cell -> sommet - 1 - pos];
     }else{
-        printf("Erreur : Pas de herissons à cette position dans la case\n");
-        exit(5);
+        team_at_pos = '0';
     }
     return team_at_pos;
 }
 
 //slice = 0 -> bord nord, slice = 1 -> la ligne de contenu du haut, etc.
-/*
+
 void cell_print(board_t* b, int line, int row, int slice){
     switch (slice)
     {
@@ -99,45 +97,104 @@ void cell_print(board_t* b, int line, int row, int slice){
         printf(" --- ");
         break;
     case 1:
-        printf("|%s%s%s|", board_top(b, line, row));
+        char team = board_top(b, line, row);
+        if (team == '0'){
+            printf("|   |");
+        }
+        else printf("|%c%c%c|", team, team, team);
         break;
     case 2:
-        printf("");
+        char team1 = board_peek(b, line, row, 1);
+        char team2 = board_peek(b, line, row, 2);
+        char team3 = board_peek(b, line, row, 3);
+
+        if (team1 == '0'){
+
+            char team = board_top(b, line, row);
+            if (team == '0'){
+                printf("|   |");
+            }
+            else printf("|%c%c%c|", team, team , team);
+        }
+
+        else if (team2 == '0'){
+            printf("|");
+            printf("%c%c%c", team1 - 'A' + 'a', team1 - 'A' + 'a', team1 - 'A' + 'a');
+            printf("|");
+
+        }
+        
+        else if (team3 == '0'){
+            printf("|%c %c|", team1 - 'A' + 'a', team2 - 'A' + 'a');
+        }
+
+        else printf("|%c%c%c|", team1 - 'A' + 'a', team2 - 'A' + 'a', team3 - 'A' + 'a');
+        break;
+    
+    case 3:
+        int hieght_stack = board_height(b, line, row);
+        if (hieght_stack > 1){
+            printf(" -%d- ", hieght_stack);
+        }
+        else printf(" --- ");
+        break;
+
     default:
         break;
     }
-
 }
 
 
 void board_print(board_t* b, int highlighted_line){
-    int i, j;
-    for (i = 0; i < TAILLE_TABLEAU_LIGNE; i++){
-        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
-            printf("  %s\n  ", 'a' + j);
-        }
-        printf("\n");
+    int line, row;
+    printf("   ");
+    for (row = 0; row < TAILLE_TABLEAU_COLONNE; row++){
+        printf("  %c  ", 'a' + row);
         printf("   ");
-        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
-            cell_print(b, i, j, 0);
-        }
-        printf("\n");
+    }
+    printf("\n");
+    for (line = 0; line < TAILLE_TABLEAU_LIGNE; line++){
         printf("   ");
-        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
-            cell_print(b, i, j, 1);
+
+        for (row = 0; row < TAILLE_TABLEAU_COLONNE; row++){
+            cell_print(b, line, row, 0);
+            printf("   ");
+        }
+
+        printf("\n");
+        if (line+1 == highlighted_line){
+            printf(" > ");
+        }
+        else printf("   ");
+
+        for (row = 0; row < TAILLE_TABLEAU_COLONNE; row++){
+            cell_print(b, line, row, 1);
+            printf("   ");
+        }
+
+        printf("\n");
+        if (line+1 == highlighted_line){
+            printf("%d> ", line + 1);
+        }
+        else printf("%d  ", line + 1);
+
+        for (row = 0; row < TAILLE_TABLEAU_COLONNE; row++){
+            cell_print(b, line, row, 2);
+            printf("   ");
+        }
+
+        printf("\n");
+        if (line+1 == highlighted_line){
+            printf(" > ");
+        }
+        else printf("   ");
+
+        for (row = 0; row < TAILLE_TABLEAU_COLONNE; row++){
+            cell_print(b, line, row, 3);
+            printf("   ");
         }
         printf("\n");
-        printf(" %d ", i);
-        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
-            cell_print(b, i, j, 2);
-        }
-        printf("\n");
-        printf("   ");
-        for (j = 0; j < TAILLE_TABLEAU_COLONNE; j++){
-            cell_print(b, i, j, 3);
-        }
     }
     
 }
 
-*/

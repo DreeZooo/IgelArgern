@@ -34,6 +34,10 @@ void test_board_cell_print(board_t* board, int line, int row, int slice){
     cell_print(board, line, row, slice);
 }
 
+void test_board_board_print(board_t* b, int hg){
+    board_print(b, hg);
+}
+
 void run_tests(board_t* board) {
     printf("----------Test of push----------\n");
     test_board_push(board, 0, 0, 'A');
@@ -68,4 +72,9 @@ void run_tests(board_t* board) {
     test_board_cell_print(board, 0, 0, 1);
     test_board_cell_print(board, 0, 0, 2);
     test_board_cell_print(board, 0, 0, 3);
+    printf("\n");
+
+    printf("----------Test of cell----------\n");
+    test_board_board_print(board, 3);
+
 }

@@ -94,49 +94,75 @@ void cell_print(board_t* b, int line, int row, int slice){
     switch (slice)
     {
     case 0:
-        printf(" --- ");
+        //vérifier si la case est un piège
+        if (b -> tableau[line][row].sommet == -1){
+            printf(" vvv ");
+        }
+        else printf(" --- ");
         break;
     case 1:
-        char team = board_top(b, line, row);
-        if (team == '0'){
-            printf("|   |");
+        if (b -> tableau[line][row].sommet == -1){
+            printf(">   <");
         }
-        else printf("|%c%c%c|", team, team, team);
-        break;
-    case 2:
-        char team1 = board_peek(b, line, row, 1);
-        char team2 = board_peek(b, line, row, 2);
-        char team3 = board_peek(b, line, row, 3);
-
-        if (team1 == '0'){
-
+        else{
             char team = board_top(b, line, row);
             if (team == '0'){
                 printf("|   |");
             }
-            else printf("|%c%c%c|", team, team , team);
+            else printf("|%c%c%c|", team, team, team);
+        }
+        break;
+    case 2:
+        if (b -> tableau[line][row].sommet == -1){
+            printf(">   <");
         }
 
-        else if (team2 == '0'){
-            printf("|");
-            printf("%c%c%c", team1 - 'A' + 'a', team1 - 'A' + 'a', team1 - 'A' + 'a');
-            printf("|");
+        else{
+            char team1 = board_peek(b, line, row, 1);
+            char team2 = board_peek(b, line, row, 2);
+            char team3 = board_peek(b, line, row, 3);
+
+            if (team1 == '0'){
+
+                char team = board_top(b, line, row);
+                if (team == '0'){
+                    printf("|   |");
+                }
+                else printf("|%c%c%c|", team, team , team);
+            }
+
+            else if (team2 == '0'){
+                printf("|");
+                printf("%c%c%c", team1 - 'A' + 'a', team1 - 'A' + 'a', team1 - 'A' + 'a');
+                printf("|");
+
+            }
+            
+            else if (team3 == '0'){
+                printf("|%c %c|", team1 - 'A' + 'a', team2 - 'A' + 'a');
+            }
+
+            else printf("|%c%c%c|", team1 - 'A' + 'a', team2 - 'A' + 'a', team3 - 'A' + 'a');
 
         }
-        
-        else if (team3 == '0'){
-            printf("|%c %c|", team1 - 'A' + 'a', team2 - 'A' + 'a');
-        }
 
-        else printf("|%c%c%c|", team1 - 'A' + 'a', team2 - 'A' + 'a', team3 - 'A' + 'a');
         break;
     
     case 3:
-        int hieght_stack = board_height(b, line, row);
-        if (hieght_stack > 1){
-            printf(" -%d- ", hieght_stack);
+        if (b -> tableau[line][row].sommet == -1){
+            printf(" ^^^ ");
         }
-        else printf(" --- ");
+        
+        else{
+            
+            int hieght_stack = board_height(b, line, row);
+            if (hieght_stack > 1){
+                printf(" -%d- ", hieght_stack);
+            }
+            else printf(" --- ");
+
+        }
+
         break;
 
     default:

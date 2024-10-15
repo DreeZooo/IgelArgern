@@ -4,10 +4,12 @@
 #define TAILLE_MAX_PILE_HERISSON 5 
 #define TAILLE_TABLEAU_LIGNE 6
 #define TAILLE_TABLEAU_COLONNE 9
+#define NOMBRE_DE_JOUEUR 4
 
 typedef struct casePlateau casePlateau;
 typedef struct board board_t;
 
+void initgame(board_t* b, int hg);
 board_t* create_board();
 casePlateau* get_cell(board_t* b, int line, int row);
 void board_push(board_t* b, int line, int row, char ctn);

@@ -15,15 +15,22 @@ casePlateau* get_cell(board_t* b, int line, int row) {
     return &(b -> tableau[line][row]);
 }
 
+void initgame(board_t* b, int hg){
+    board_print(b, hg);
+}
+
+
 board_t* create_board() {
     board_t* board = (board_t*)malloc(sizeof(board_t));
-    if (board) {
-        for (int i = 0; i < TAILLE_TABLEAU_LIGNE; ++i) {
-            for (int j = 0; j < TAILLE_TABLEAU_COLONNE; ++j) {
-                board->tableau[i][j].sommet = 0;
+        for (int line = 0; line < TAILLE_TABLEAU_LIGNE; line++) {
+            for (int row = 0; row < TAILLE_TABLEAU_COLONNE; row++) {
+                if((line == 0 && row == 2) | (line == 1 && row == 6) | (line == 2 && row == 4) | (line == 3 && row == 5) | (line == 4 && row == 3) | (line == 5 && row == 7)){
+                    board->tableau[line][row].sommet = -1;
+                }else{
+                    board->tableau[line][row].sommet = 0;
+                }
             }
         }
-    }
     return board;
 }
 
@@ -221,6 +228,8 @@ void board_print(board_t* b, int highlighted_line){
         }
         printf("\n");
     }
+
+    
     
 }
 

@@ -9,7 +9,7 @@
 typedef struct casePlateau casePlateau;
 typedef struct board board_t;
 
-void initgame(board_t* b, int hg);
+void initgame(board_t* b, int highlighted_line);
 board_t* create_board();
 casePlateau* get_cell(board_t* b, int line, int row);
 void board_push(board_t* b, int line, int row, char ctn);

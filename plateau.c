@@ -17,7 +17,7 @@ casePlateau* get_cell(board_t* b, int line, int row) {
     return &(b -> tableau[line][row]);
 }
 
-void initgame(board_t* b, int hg){
+void initgame(board_t* b, int highlighted_line){
     char players [NOMBRE_DE_JOUEUR];
     bool insert_in_stack = false;
     for (int i = 0 ; i < NOMBRE_DE_JOUEUR; i++){

@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 #include "plateau.h"
 
 struct casePlateau{
@@ -18,15 +19,20 @@ casePlateau* get_cell(board_t* b, int line, int row) {
 
 void initgame(board_t* b, int hg){
     char players [NOMBRE_DE_JOUEUR];
+    bool insert_in_stack = false;
     for (int i = 0 ; i < NOMBRE_DE_JOUEUR; i++){
         players[i] = 'A' + i;
     } 
     for (int j = 0; j < NOMBRE_DE_JOUEUR; j++){
         for (int k = 0; k < 4; k++){
-            int number_random = rand() % TAILLE_TABLEAU_LIGNE;
-            if(board_height(b, number_random, 0) < TAILLE_MAX_PILE_HERISSON){
-                board_push(b, number_random, 0, players[j]);
+            while(insert_in_stack == false){
+                int number_random = rand() % TAILLE_TABLEAU_LIGNE;
+                if(board_height(b, number_random, 0) < TAILLE_MAX_PILE_HERISSON){
+                    board_push(b, number_random, 0, players[j]);
+                    insert_in_stack = true; 
+                }
             }
+            insert_in_stack = false;
         }
     }
     board_print(b, hg);

@@ -7,6 +7,7 @@
 struct casePlateau{
     char pile[TAILLE_MAX_PILE_HERISSON];
     int sommet;
+    bool flag;
 };
 
 struct board{
@@ -35,7 +36,7 @@ void initgame(board_t* b, int highlighted_line){
             insert_in_stack = false;
         }
     }
-    board_print(b, hg);
+    board_print(b, highlighted_line);
 }
 
 
@@ -43,10 +44,11 @@ board_t* create_board() {
     board_t* board = (board_t*)malloc(sizeof(board_t));
         for (int line = 0; line < TAILLE_TABLEAU_LIGNE; line++) {
             for (int row = 0; row < TAILLE_TABLEAU_COLONNE; row++) {
+                board->tableau[line][row].sommet = 0;
                 if((line == 0 && row == 2) | (line == 1 && row == 6) | (line == 2 && row == 4) | (line == 3 && row == 5) | (line == 4 && row == 3) | (line == 5 && row == 7)){
-                    board->tableau[line][row].sommet = -1;
+                    board->tableau[line][row].flag = false;
                 }else{
-                    board->tableau[line][row].sommet = 0;
+                    board->tableau[line][row].flag = true;
                 }
             }
         }
@@ -121,13 +123,13 @@ void cell_print(board_t* b, int line, int row, int slice){
     {
     case 0:
         //vérifier si la case est un piège
-        if (b -> tableau[line][row].sommet == -1){
+        if (b -> tableau[line][row].flag == false){
             printf(" vvv ");
         }
         else printf(" --- ");
         break;
     case 1:
-        if (b -> tableau[line][row].sommet == -1){
+        if (b -> tableau[line][row].flag == false){
             printf(">   <");
         }
         else{
@@ -139,7 +141,7 @@ void cell_print(board_t* b, int line, int row, int slice){
         }
         break;
     case 2:
-        if (b -> tableau[line][row].sommet == -1){
+        if (b -> tableau[line][row].flag == false){
             printf(">   <");
         }
 
@@ -175,7 +177,7 @@ void cell_print(board_t* b, int line, int row, int slice){
         break;
     
     case 3:
-        if (b -> tableau[line][row].sommet == -1){
+        if (b -> tableau[line][row].flag == false){
             printf(" ^^^ ");
         }
         

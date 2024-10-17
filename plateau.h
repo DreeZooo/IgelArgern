@@ -5,6 +5,7 @@
 #define TAILLE_TABLEAU_LIGNE 6
 #define TAILLE_TABLEAU_COLONNE 9
 #define NOMBRE_DE_JOUEUR 4
+#define NOMBRE_HERISSON 4
 
 typedef struct casePlateau casePlateau;
 typedef struct board board_t;

@@ -12,6 +12,7 @@ struct casePlateau{
 
 struct board{
     struct casePlateau tableau[TAILLE_TABLEAU_LIGNE][TAILLE_TABLEAU_COLONNE];
+    int score_array[NOMBRE_DE_JOUEUR];
 };
 
 casePlateau* get_cell(board_t* b, int line, int row) {
@@ -42,16 +43,22 @@ void initgame(board_t* b, int highlighted_line){
 
 board_t* create_board() {
     board_t* board = (board_t*)malloc(sizeof(board_t));
-        for (int line = 0; line < TAILLE_TABLEAU_LIGNE; line++) {
-            for (int row = 0; row < TAILLE_TABLEAU_COLONNE; row++) {
-                board->tableau[line][row].sommet = 0;
-                if((line == 0 && row == 2) | (line == 1 && row == 6) | (line == 2 && row == 4) | (line == 3 && row == 5) | (line == 4 && row == 3) | (line == 5 && row == 7)){
-                    board->tableau[line][row].flag = false;
-                }else{
-                    board->tableau[line][row].flag = true;
-                }
+    for (int line = 0; line < TAILLE_TABLEAU_LIGNE; line++) {
+        for (int row = 0; row < TAILLE_TABLEAU_COLONNE; row++) {
+            board->tableau[line][row].sommet = 0;
+            if((line == 0 && row == 2) | (line == 1 && row == 6) | (line == 2 && row == 4) | (line == 3 && row == 5) | (line == 4 && row == 3) | (line == 5 && row == 7)){
+                board->tableau[line][row].flag = false;
+            }else{
+                board->tableau[line][row].flag = true;
             }
         }
+    }
+
+    for (int i = 0; i < NOMBRE_DE_JOUEUR; i++){
+        board -> score_array[i] = 0;
+    }
+    
+
     return board;
 }
 

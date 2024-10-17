@@ -1,18 +1,20 @@
+#include <stdbool.h>
 #ifndef PLATEAU_H
 #define PLATEAU_H
 
 #define TAILLE_MAX_PILE_HERISSON 5 
-#define TAILLE_TABLEAU_LIGNE 6
-#define TAILLE_TABLEAU_COLONNE 9
-#define NOMBRE_DE_JOUEUR 4
+#define TAILLE_TABLEAU_LIGNE 3
+#define TAILLE_TABLEAU_COLONNE 3
+#define NOMBRE_DE_JOUEUR 1
 #define NOMBRE_HERISSON 4
 
 typedef struct casePlateau casePlateau;
 typedef struct board board_t;
 
-void initgame(board_t* b, int highlighted_line);
+void initgame(board_t* b);
 board_t* create_board();
 casePlateau* get_cell(board_t* b, int line, int row);
+bool get_flag(casePlateau* cell);
 void board_push(board_t* b, int line, int row, char ctn);
 char board_pop(board_t* b, int line, int row);
 int board_height(board_t* b, int line, int row);

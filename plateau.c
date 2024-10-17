@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
 #include "plateau.h"
@@ -19,7 +19,12 @@ casePlateau* get_cell(board_t* b, int line, int row) {
     return &(b -> tableau[line][row]);
 }
 
-void initgame(board_t* b, int highlighted_line){
+
+bool get_flag(casePlateau* cell){
+    return (cell -> flag); 
+}
+
+void initgame(board_t* b){
     char players [NOMBRE_DE_JOUEUR];
     bool insert_in_stack = false;
     for (int i = 0 ; i < NOMBRE_DE_JOUEUR; i++){
@@ -37,7 +42,6 @@ void initgame(board_t* b, int highlighted_line){
             insert_in_stack = false;
         }
     }
-    board_print(b, highlighted_line);
 }
 
 
@@ -256,8 +260,5 @@ void board_print(board_t* b, int highlighted_line){
         }
         printf("\n");
     }
-
-    
-    
 }
 

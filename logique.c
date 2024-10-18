@@ -135,10 +135,33 @@ void forward_move(board_t* board, int line, char team){
 
 
 void playgame(){
+    int choice;
     int vertical_response;
     srand(time(NULL));
     board_t* board = create_board();
     initgame(board);
+    menu_affichage();
+    while(true){
+        printf("Bienvenue dans le jeu : \n");
+        printf("1. Jouer\n");
+        printf("2. Credits\n");
+        scanf("%d", &choice);
+        if (choice == 1){
+            system("clear");
+            printf("Que le jeu commence ! \n");
+            break;
+        }else if(choice == 2){
+            system("clear");
+            printf("Creator : Nowar & Benjamin :)\n");
+            printf("\n\n\n\n\n");
+            continue;
+        }else{
+            continue;
+        }
+    }
+
+    
+
     while (!winning_condition(board)){
         for (int i = 0; i < NOMBRE_DE_JOUEUR; i++){
             int random_tirage = lance_de();
@@ -153,7 +176,7 @@ void playgame(){
                 }else{
                     vertical_move(board, 'A'+i);
                 }
-            }            
+            }          
             board_print(board, random_tirage);
             forward_move(board, random_tirage, 'A' + i);
         }

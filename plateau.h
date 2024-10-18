@@ -27,5 +27,7 @@ char board_top(board_t* b, int line, int row);
 char board_peek(board_t* b, int line, int row, int pos);
 void cell_print(board_t* b, int line, int row, int slice);
 void board_print(board_t* b, int highlighted_line);
+void menu_affichage();
+
 
 #endif /* PLATEAU_H */

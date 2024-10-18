@@ -12,5 +12,4 @@ void forward_move(board_t* board, int line, char team);
 int winning_condition(board_t* board);
 void playgame();
 
-
 #endif /* LOGIQUE_H */

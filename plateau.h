@@ -5,8 +5,8 @@
 #define TAILLE_MAX_PILE_HERISSON 5 
 #define TAILLE_TABLEAU_LIGNE 3
 #define TAILLE_TABLEAU_COLONNE 3
-#define NOMBRE_DE_JOUEUR 1
-#define NOMBRE_HERISSON 4
+#define NOMBRE_DE_JOUEUR 2
+#define NOMBRE_HERISSON 2
 
 typedef struct casePlateau casePlateau;
 typedef struct board board_t;
@@ -14,8 +14,11 @@ typedef struct board board_t;
 void initgame(board_t* b);
 board_t* create_board();
 casePlateau* get_cell(board_t* b, int line, int row);
+int winning_condition(board_t* board);
 int* get_score_array(board_t* board);
 bool get_flag(casePlateau* cell);
+int movable_herisson(board_t* board, char team);
+void increase_winning_herisson(board_t* board, char team);
 bool cell_trap(board_t*, int line, int row);
 void board_push(board_t* b, int line, int row, char ctn);
 char board_pop(board_t* b, int line, int row);

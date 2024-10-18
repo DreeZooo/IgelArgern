@@ -27,11 +27,39 @@ bool get_flag(casePlateau* cell){
     return (cell -> flag); 
 }
 
+int movable_herisson(board_t* board, char team){
+    for (int i = 0; i < TAILLE_TABLEAU_LIGNE; i++){
+        for(int j = 0; j < TAILLE_TABLEAU_COLONNE -1; j++){
+            if (board_top(board, i, j) == team){
+                return 1;
+                break;
+            }
+        }
+    }
+    return 0;
+}
+void increase_winning_herisson(board_t* board, char team){
+    board -> score_array[(int)team - 'A']++;
+}
+
 bool cell_trap(board_t*, int line, int row){
     if((line == 0 && row == 2) | (line == 1 && row == 6) | (line == 2 && row == 4) | (line == 3 && row == 5) | (line == 4 && row == 3) | (line == 5 && row == 7)){
         return true;
     }
     return false;
+}
+
+int winning_condition(board_t* board){
+    int number_winner = 0;
+    //char winner[NOMBRE_DE_JOUEUR];
+    for (int i = 0; i < NOMBRE_DE_JOUEUR; i++){
+        //winner[i] = '0';
+    }
+    
+    for (int i = 0; i < NOMBRE_DE_JOUEUR; i++){
+        if (board -> score_array[i] == NOMBRE_HERISSON - 1) {number_winner++;}// winner[i] = 'A' + i;}
+    }
+    return number_winner;
 }
 
 void initgame(board_t* b){
@@ -41,7 +69,7 @@ void initgame(board_t* b){
         players[i] = 'A' + i;
     } 
     for (int j = 0; j < NOMBRE_DE_JOUEUR; j++){
-        for (int k = 0; k < 4; k++){
+        for (int k = 0; k < NOMBRE_HERISSON; k++){
             while(insert_in_stack == false){
                 int number_random = rand() % TAILLE_TABLEAU_LIGNE;
                 if(board_height(b, number_random, 0) < TAILLE_MAX_PILE_HERISSON){

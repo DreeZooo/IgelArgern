@@ -19,9 +19,19 @@ casePlateau* get_cell(board_t* b, int line, int row) {
     return &(b -> tableau[line][row]);
 }
 
+int* get_score_array(board_t* board){
+    return (board -> score_array);
+}
 
 bool get_flag(casePlateau* cell){
     return (cell -> flag); 
+}
+
+bool cell_trap(board_t*, int line, int row){
+    if((line == 0 && row == 2) | (line == 1 && row == 6) | (line == 2 && row == 4) | (line == 3 && row == 5) | (line == 4 && row == 3) | (line == 5 && row == 7)){
+        return true;
+    }
+    return false;
 }
 
 void initgame(board_t* b){
@@ -140,11 +150,15 @@ void cell_print(board_t* b, int line, int row, int slice){
         else printf(" --- ");
         break;
     case 1:
+        char team = board_top(b, line, row);
         if (b -> tableau[line][row].flag == false){
-            printf(">   <");
+            if(team == '0'){
+                printf(">   <");
+            }else{
+                printf(">%c%c%c<", team, team, team);
+            }
         }
         else{
-            char team = board_top(b, line, row);
             if (team == '0'){
                 printf("|   |");
             }
@@ -152,15 +166,29 @@ void cell_print(board_t* b, int line, int row, int slice){
         }
         break;
     case 2:
+        char team1 = board_peek(b, line, row, 1);
+        char team2 = board_peek(b, line, row, 2);
+        char team3 = board_peek(b, line, row, 3);
+
         if (b -> tableau[line][row].flag == false){
-            printf(">   <");
+            if (team1 == '0'){
+                char team = board_top(b, line, row);
+                if(team == '0'){
+                    printf((">   <"));
+                }else{
+                    printf(">%c%c%c<", team, team, team);
+                }
+            }else if (team2 == '0'){
+                printf(">");
+                printf("%c%c%c", team1 - 'A' + 'a', team1 - 'A' + 'a', team1 - 'A' + 'a');
+                printf(">");
+            }else if (team3 == '0'){
+                printf(">%c %c<", team1 - 'A' + 'a', team2 - 'A' + 'a');
+            }else {
+                printf(">%c%c%c<", team1 - 'A' + 'a', team2 - 'A' + 'a', team3 - 'A' + 'a');
+            }
         }
-
         else{
-            char team1 = board_peek(b, line, row, 1);
-            char team2 = board_peek(b, line, row, 2);
-            char team3 = board_peek(b, line, row, 3);
-
             if (team1 == '0'){
 
                 char team = board_top(b, line, row);

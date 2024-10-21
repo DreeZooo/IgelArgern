@@ -8,6 +8,7 @@ struct casePlateau {
   char pile[TAILLE_MAX_PILE_HERISSON];
   int sommet;
   bool flag;
+  bool portal;
 };
 
 struct board {
@@ -22,6 +23,8 @@ casePlateau *get_cell(board_t *b, int line, int row) {
 int *get_score_array(board_t *board) { return (board->score_array); }
 
 bool get_flag(casePlateau *cell) { return (cell->flag); }
+
+bool get_portal(casePlateau *cell) { return (cell->portal); }
 
 int movable_herisson(board_t *board, char team) {
   for (int i = 0; i < TAILLE_TABLEAU_LIGNE; i++) {
@@ -77,7 +80,7 @@ void initgame(board_t *b) {
   }
 }
 
-board_t *create_board() {
+board_t *create_board(bool extension) {
   board_t *board = (board_t *)malloc(sizeof(board_t));
   for (int line = 0; line < TAILLE_TABLEAU_LIGNE; line++) {
     for (int row = 0; row < TAILLE_TABLEAU_COLONNE; row++) {
@@ -89,6 +92,13 @@ board_t *create_board() {
       } else {
         board->tableau[line][row].flag = true;
       }
+      if (extension) {
+        if ((line == 3 && row == 1) | (line == 4 && row == 7)) {
+            board->tableau[line][row].portal = true;
+        } else {
+            board->tableau[line][row].portal = false;
+        }
+      }else board->tableau[line][row].portal = false;
     }
   }
 
@@ -168,6 +178,8 @@ void cell_print(board_t *b, int line, int row, int slice) {
     // vérifier si la case est un piège
     if (b->tableau[line][row].flag == false) {
       printf(" vvv ");
+    } else if (b->tableau[line][row].portal == true) {
+      printf(" /-\\ ");
     } else
       printf(" --- ");
     break;
@@ -244,7 +256,10 @@ void cell_print(board_t *b, int line, int row, int slice) {
       printf(" ^^^ ");
     }
 
-    else {
+    else if (b->tableau[line][row].portal == true) {
+      printf(" \\_/ ");
+
+    } else {
 
       int hieght_stack = board_height(b, line, row);
       if (hieght_stack > 1) {

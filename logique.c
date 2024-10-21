@@ -6,6 +6,12 @@
 
 int lance_de() { return rand() % TAILLE_TABLEAU_LIGNE + 1; }
 
+void find_other_portal(board_t *board, int line, int row, char herisson) {
+    if ((line == 3 && row == 1)) {
+        board_push(board, 4, 7, herisson);
+    } else board_push(board, 3, 1, herisson);
+}
+
 void vertical_move(board_t *board, char team) {
   char choice[10];
   bool valid_input = false;
@@ -68,7 +74,9 @@ void vertical_move(board_t *board, char team) {
                               row_array_position) <=
                  TAILLE_MAX_PILE_HERISSON - 1) {
         herisson = board_pop(board, line_array_position, row_array_position);
-        board_push(board, line_array_position - 1, row_array_position,
+        if (get_portal(get_cell(board, line_array_position - 1, row_array_position))) {
+            find_other_portal(board, line_array_position - 1, row_array_position, herisson);
+        } else board_push(board, line_array_position - 1, row_array_position,
                    herisson);
         printf("Hérisson déplacé avec succès vers le haut !\n");
         break;
@@ -169,7 +177,10 @@ void forward_move(board_t *board, int line, char team) {
       continue;
     } else {
       hedgehog = board_pop(board, line - 1, row_index);
-      board_push(board, line - 1, row_index + 1, hedgehog);
+      if (get_portal(get_cell(board, line - 1, row_index + 1))) {
+        find_other_portal(board, line - 1, row_index + 1, hedgehog);
+      } 
+      else board_push(board, line - 1, row_index + 1, hedgehog);
       printf("Le herisson a avancé d'une case ! \n");
       if (row_index == TAILLE_TABLEAU_COLONNE - 2) {
         increase_winning_herisson(board, hedgehog);
@@ -184,9 +195,10 @@ void playgame() {
   int vertical_response;
   bool valid_input = false;
   srand(time(NULL));
-  board_t *board = create_board();
-  initgame(board);
+  //board_t *board = create_board();
+  //initgame(board);
   menu_affichage();
+  bool extension = false;
 
   while (1) {
     printf("Bienvenue dans le jeu : \n");
@@ -206,6 +218,7 @@ void playgame() {
              "placer dans hérisson dans un téléporteur il sera alors "
              "téléporter dans sur un autre portail\n");
       printf("Que le jeu commence ! \n");
+      extension = true;
       break;
     } else if (menu_choice[0] == '3' && menu_choice[1] == '\n') {
       system("clear");
@@ -215,6 +228,9 @@ void playgame() {
       printf("Entrée invalide. Veuillez entrer 1 ou 2.\n");
     }
   }
+
+  board_t *board = create_board(extension);
+  initgame(board);
 
   while (!winning_condition(board)) {
     for (int i = 0; i < NOMBRE_DE_JOUEUR; i++) {

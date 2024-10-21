@@ -21,13 +21,13 @@ void vertical_move(board_t *board, char team) {
       fgets(choice, 10, stdin);
 
       if (sscanf(choice, "%d %c", &line, &row) != 2) {
-        printf("Erreur veiller saisir des coordonées valide\n");
+        printf("Erreur, veiller saisir des coordonées valide\n");
         continue;
       } else if (line < 1 || line > TAILLE_TABLEAU_LIGNE) {
-        printf("Erreur, la ligne est en dehors du plateau\n");
+        printf("Erreur, la ligne est en dehors du plateau !\n");
         continue;
       } else if (row < 'a' || row > 'a' + TAILLE_TABLEAU_COLONNE - 1) {
-        printf("Erreur, la colonne est en dehors du plateau\n");
+        printf("Erreur, la colonne est en dehors du plateau !\n");
         continue;
       } else {
         valid_input = true;
@@ -55,7 +55,7 @@ void vertical_move(board_t *board, char team) {
         valid_input = true;
         direction = choice[0] - '0';
       } else {
-        printf("Veuillez saisir 0 ou 1\n");
+        printf("Veuillez saisir 0 pour bas ou 1 pour haut\n");
         continue;
       }
     }
@@ -135,7 +135,8 @@ void forward_move(board_t *board, int line, char team) {
 
   while (true) {
     while (valid_input != true) {
-      printf("Quel herisson voulez-vous déplacer vers l'avant : ");
+      printf("Quel herisson voulez-vous déplacer vers l'avant (entrée la "
+             "colonne où l'hérisson se trouve) : ");
       fgets(choice, 10, stdin);
       if (((choice[0] >= 'a' && choice[0] < 'a' + TAILLE_TABLEAU_COLONNE) ||
            (choice[0] >= 'A' && choice[0] < 'A' + TAILLE_TABLEAU_COLONNE)) &&

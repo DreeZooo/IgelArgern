@@ -49,15 +49,10 @@ bool cell_trap(board_t *, int line, int row) {
 
 int winning_condition(board_t *board) {
   int number_winner = 0;
-  // char winner[NOMBRE_DE_JOUEUR];
-  for (int i = 0; i < NOMBRE_DE_JOUEUR; i++) {
-    // winner[i] = '0';
-  }
-
   for (int i = 0; i < NOMBRE_DE_JOUEUR; i++) {
     if (board->score_array[i] == NOMBRE_HERISSON - 1) {
       number_winner++;
-    } // winner[i] = 'A' + i;}
+    }
   }
   return number_winner;
 }

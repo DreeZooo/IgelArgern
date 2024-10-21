@@ -1,9 +1,0 @@
-{
-    "C_Cpp.errorSquiggles": "disabled",
-    "files.associations": {
-        "plateau.h": "c",
-        "testunitaire.h": "c",
-        "stdlib.h": "c",
-        "stdio.h": "c"
-    }
-}

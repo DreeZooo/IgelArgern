@@ -8,10 +8,12 @@ int lance_de(){
     return rand() % TAILLE_TABLEAU_LIGNE +1;
 }
 
-void seek_to_next_line( void ){
+void seek_to_next_line(void) {
     int c;
-    while( (c = fgetc( stdin )) != EOF && c != '\n' );
+    while ((c = fgetc(stdin)) != EOF && c != '\n');
 }
+
+
 
 void vertical_move(board_t* board, char team){
     int line;
@@ -145,43 +147,56 @@ void forward_move(board_t* board, int line, char team){
     }*/
 
 
-void playgame(){
-    char choice[2];
+void playgame() {
+    char menu_choice[10];  
     int vertical_response;
+    bool valid_input = false;
     srand(time(NULL));
     board_t* board = create_board();
     initgame(board);
     menu_affichage();
-    while(true){
+
+    while (1) {
         printf("Bienvenue dans le jeu : \n");
         printf("1. Jouer\n");
         printf("2. Credits\n");
-        fgets(choice, 2, stdin);
-        seek_to_next_line();
-        if (*choice == '1'){
+
+        fgets(menu_choice, 10, stdin); 
+
+        if (menu_choice[0] == '1' && menu_choice[1] == '\n') {
             system("clear");
             printf("Que le jeu commence ! \n");
             break;
-        }else if(*choice == '2'){
+        } else if (menu_choice[0] == '2' && menu_choice[1] == '\n') {
             system("clear");
-            printf("Creator : Nowar & Benjamin :)\n");
+            printf("Creators : Nowar & Benjamin :)\n");
             printf("\n\n\n\n\n");
-            continue;
-        }else{
-            continue;
+        } else {
+            printf("Entrée invalide. Veuillez entrer 1 ou 2.\n");
         }
     }
-
     
 
     while (!winning_condition(board)){
         for (int i = 0; i < NOMBRE_DE_JOUEUR; i++){
+            char choice[10];  
             int random_tirage = lance_de();
             board_print(board, random_tirage);
             printf("Le dé est tombé sur  : %d\n", random_tirage);
             printf("L'équipe %c joue \n", i +'A');
-            printf("Voulez vous déplacer un hérisson verticalement (1 pour oui, 0 pour non) : ");
-            scanf(" %d", &vertical_response);
+            
+            while(valid_input == false){
+                printf("Voulez vous déplacer un hérisson verticalement (1 pour oui, 0 pour non) : ");
+                fgets(choice, 10, stdin);
+                if (((choice[0] == '0') || (choice[0] == '1')) && choice[1] == '\n'){
+                    valid_input = true;
+                    vertical_response = choice[0] - '0';
+                }else{
+                    printf("Veuillez saisir 0 ou 1\n");
+                    continue;
+                }
+            }
+
             if (vertical_response == 1){
                 if(!(movable_herisson(board, i + 'A'))){
                     printf("Pas de hérisson déplacable verticalement\n");

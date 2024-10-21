@@ -8,6 +8,11 @@ int lance_de(){
     return rand() % TAILLE_TABLEAU_LIGNE +1;
 }
 
+void seek_to_next_line( void ){
+    int c;
+    while( (c = fgetc( stdin )) != EOF && c != '\n' );
+}
+
 void vertical_move(board_t* board, char team){
     int line;
     int direction = -1;
@@ -141,7 +146,7 @@ void forward_move(board_t* board, int line, char team){
 
 
 void playgame(){
-    int choice;
+    char choice[2];
     int vertical_response;
     srand(time(NULL));
     board_t* board = create_board();
@@ -151,12 +156,13 @@ void playgame(){
         printf("Bienvenue dans le jeu : \n");
         printf("1. Jouer\n");
         printf("2. Credits\n");
-        scanf("%d", &choice);
-        if (choice == 1){
+        fgets(choice, 2, stdin);
+        seek_to_next_line();
+        if (*choice == '1'){
             system("clear");
             printf("Que le jeu commence ! \n");
             break;
-        }else if(choice == 2){
+        }else if(*choice == '2'){
             system("clear");
             printf("Creator : Nowar & Benjamin :)\n");
             printf("\n\n\n\n\n");
@@ -194,15 +200,18 @@ void playgame(){
     int place = 1;
     int max_herisson1 = NOMBRE_HERISSON - 1;
     int max_herisson2 = 0;
+    int n = 0;
     while (printed < NOMBRE_DE_JOUEUR){
         printf("- Place #%d : ", place);
         for (int i = 0; i < NOMBRE_DE_JOUEUR; i++){
             if (score[i] == max_herisson1){
                 printf("équipe %c, ", 'A'+i);
                 printed++;
+                n ++;
             }else if (max_herisson2 < score[i]) max_herisson2 = score[i]; 
         }
-        place++;
+        place += n;
+        n = 0;
         printf("(avec %d hérissons);", max_herisson1);
         printf("\n");
         max_herisson1 = max_herisson2;

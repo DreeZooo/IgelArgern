@@ -5,6 +5,7 @@ typedef struct casePlateau casePlateau;
 typedef struct board board_t;
 
 int lance_de();
+void seek_to_next_line( void );
 void vertical_move(board_t* board, char team);
 int hedgehog_behind(board_t* board, int line, int row);
 bool hedgehog_on_the_line(board_t* board, int line, char team);

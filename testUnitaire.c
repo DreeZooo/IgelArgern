@@ -32,6 +32,7 @@ void test_board_peek(board_t* board, int line, int row, int pos){
 
 void test_board_cell_print(board_t* board, int line, int row, int slice){
     cell_print(board, line, row, slice);
+    
 }
 
 void run_tests(board_t* board) {

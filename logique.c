@@ -131,7 +131,13 @@ void forward_move(board_t* board, int line, char team){
                 break;
             }                                          
         }
-}
+    }
+
+    
+
+    /*if (row+1 == TAILLE_TABLEAU_COLONNE-1){
+        board -> score_array[(int)hedgehog - 'A']++;
+    }*/
 
 
 void playgame(){
@@ -181,4 +187,25 @@ void playgame(){
             forward_move(board, random_tirage, 'A' + i);
         }
     }
+
+    //afficher les résultats
+    int* score = get_score_array(board);
+    int printed = 0;
+    int place = 1;
+    int max_herisson1 = NOMBRE_HERISSON - 1;
+    int max_herisson2 = 0;
+    while (printed < NOMBRE_DE_JOUEUR){
+        printf("- Place #%d : ", place);
+        for (int i = 0; i < NOMBRE_DE_JOUEUR; i++){
+            if (score[i] == max_herisson1){
+                printf("équipe %c, ", 'A'+i);
+                printed++;
+            }else if (max_herisson2 < score[i]) max_herisson2 = score[i]; 
+        }
+        place++;
+        printf("(avec %d hérissons);", max_herisson1);
+        printf("\n");
+        max_herisson1 = max_herisson2;
+    }
+    
 }

@@ -2,7 +2,7 @@ LDFLAGS =-g
 CFLAGS = -Wall -Wextra -Wno-unused-parameter
 CFLAGS := $(CFLAGS) -Werror
 
-igelArgern : main.o plateau.o testUnitaire.o logique.o
+igelargern : main.o plateau.o testUnitaire.o logique.o
 	gcc $(LDFLAGS) $^ -o $@
 
 main.o : main.c plateau.h
@@ -18,5 +18,5 @@ testUnitaire.o : testUnitaire.c testUnitaire.h
 	gcc $(CFLAGS) -c $<
 
 clean : 
-	rm -f main.o plateau.o igelArgern testUnitaire.o logique.o
+	rm -f main.o plateau.o igelargern testUnitaire.o logique.o
 .PHONY: clean 

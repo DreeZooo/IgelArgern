@@ -1,7 +1,6 @@
+#include "plateau.h"
 #ifndef TEST_UNITAIRE_H
 #define TEST_UNITAIRE_H
-
-#include "plateau.h"
 
 void run_tests();
 void test_board_push(board_t* board, int line, int row, char ctn);

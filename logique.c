@@ -7,6 +7,12 @@
 
 int lance_de() { return rand() % TAILLE_TABLEAU_LIGNE + 1; }
 
+void clean_buffer(void) {
+  int c;
+  while ((c = fgetc(stdin)) != EOF && c != '\n')
+    ;
+}
+
 void find_other_portal(board_t *board, int line, int row, char herisson) {
   int portal_found = false;
   for (int i = 0; i < TAILLE_TABLEAU_LIGNE; i++) {
@@ -39,6 +45,7 @@ void vertical_move(board_t *board, char team) {
       fgets(choice, 10, stdin);
 
       if (sscanf(choice, "%d %c", &line, &row) != 2) {
+        clean_buffer();
         printf("Erreur, veiller saisir des coordonées valide\n");
         continue;
       } else if (line < 1 || line > TAILLE_TABLEAU_LIGNE) {
@@ -76,6 +83,7 @@ void vertical_move(board_t *board, char team) {
         direction = choice[0] - '0';
       } else {
         printf("Veuillez saisir 0 pour bas ou 1 pour haut\n");
+        clean_buffer();
         continue;
       }
     }
@@ -173,6 +181,7 @@ void forward_move(board_t *board, int line, char team) {
         row = choice[0];
       } else {
         printf("Veuillez saisir une colonne valide en minuscule \n");
+        clean_buffer();
         continue;
       }
     }
@@ -249,6 +258,7 @@ void playgame() {
     } else {
       printf("Entrée invalide. Veuillez entrer 1 ou 2.\n");
     }
+    clean_buffer();
   }
 
   board_t *board = create_board(extension);
@@ -270,10 +280,13 @@ void playgame() {
         if (((choice[0] == '0') || (choice[0] == '1')) && choice[1] == '\n') {
           valid_input = true;
           vertical_response = choice[0] - '0';
+          break;
         } else {
           printf("Veuillez saisir 0 ou 1\n");
+          clean_buffer();
           continue;
         }
+        clean_buffer();
       }
 
       if (vertical_response == 1) {

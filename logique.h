@@ -6,6 +6,7 @@ typedef struct casePlateau casePlateau;
 typedef struct board board_t;
 
 int lance_de();
+void clean_buffer(void);
 void find_other_portal(board_t *board, int line, int row, char herisson);
 void seek_to_next_line( void );
 void vertical_move(board_t* board, char team);

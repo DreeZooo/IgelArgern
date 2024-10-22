@@ -7,9 +7,17 @@
 int lance_de() { return rand() % TAILLE_TABLEAU_LIGNE + 1; }
 
 void find_other_portal(board_t *board, int line, int row, char herisson) {
-    if ((line == 3 && row == 1)) {
-        board_push(board, 4, 7, herisson);
-    } else board_push(board, 3, 1, herisson);
+    int portal_found = false;
+    for (int i = 0; i < TAILLE_TABLEAU_LIGNE; i++) {
+        for (int j = 0; j < TAILLE_TABLEAU_COLONNE; j++) {
+            if (i != line && j != row && get_portal(get_cell(board, i, j)) && !portal_found) {
+                board_push(board, i, j, herisson);
+                portal_found = true;
+                break;
+            }
+        }
+        if (portal_found) {break;}
+    }
 }
 
 void vertical_move(board_t *board, char team) {
@@ -43,9 +51,11 @@ void vertical_move(board_t *board, char team) {
     top = board_top(board, line - 1, (int)(row - 'a'));
     if (top == '0') {
       printf("La case sélectionnée est vide\n");
+      valid_input = false;
       continue;
     } else if (top != team) {
       printf("Le herisson sélectionné n'est pas le votre\n");
+      valid_input = false;
       continue;
     }
 
@@ -69,6 +79,7 @@ void vertical_move(board_t *board, char team) {
       if (line_array_position == 0) {
         printf("Impossible de se déplacer vers le haut, veuillez choisir un "
                "autre hérisson\n");
+        valid_input = false;
         continue;
       } else if (board_height(board, line_array_position - 1,
                               row_array_position) <=
@@ -82,12 +93,14 @@ void vertical_move(board_t *board, char team) {
         break;
       } else {
         printf("Impossible de déplacer l'hérisson car la case est pleine...\n");
+        valid_input = false;
         continue;
       }
     } else if (direction == 0) {
       if (line_array_position == TAILLE_TABLEAU_LIGNE - 1) {
         printf("Impossible de se déplacer vers le bas, veuillez choisir un "
                "autre hérisson\n");
+        valid_input = false;
         continue;
       } else if (board_height(board, line_array_position + 1,
                               row_array_position) <=
@@ -163,17 +176,21 @@ void forward_move(board_t *board, int line, char team) {
 
     if (row_index < 0 || row_index >= TAILLE_TABLEAU_COLONNE) {
       printf("Erreur la colonne choisit est dans dehors du plateau de jeu.\n");
+      valid_input = false;
       continue;
     } else if (top == '0') {
       printf("La case sélectionnée est vide\n");
+      valid_input = false;
       continue;
     } else if (state_of_cell & hedgehog_behind(board, index_line, row_index)) {
       printf("Impossible de déplacer un hérisson dans une case piègée tant "
              "qu'il y a d'autres hérissons dérière sur la même ligne\n");
+      valid_input = false;
       continue;
     } else if (row_index == TAILLE_TABLEAU_COLONNE - 1) {
       printf(
           "Impossible de déplacer des hérissons qui sont arrivés à la fin\n");
+      valid_input = false; 
       continue;
     } else {
       hedgehog = board_pop(board, line - 1, row_index);

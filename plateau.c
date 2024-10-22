@@ -82,6 +82,7 @@ void initgame(board_t *b) {
 
 board_t *create_board(bool extension) {
   board_t *board = (board_t *)malloc(sizeof(board_t));
+  srand(time(NULL));
   for (int line = 0; line < TAILLE_TABLEAU_LIGNE; line++) {
     for (int row = 0; row < TAILLE_TABLEAU_COLONNE; row++) {
       board->tableau[line][row].sommet = 0;
@@ -91,16 +92,23 @@ board_t *create_board(bool extension) {
         board->tableau[line][row].flag = false;
       } else {
         board->tableau[line][row].flag = true;
-      }
-      if (extension) {
-        if ((line == 3 && row == 1) | (line == 4 && row == 7)) {
-            board->tableau[line][row].portal = true;
-        } else {
-            board->tableau[line][row].portal = false;
-        }
-      }else board->tableau[line][row].portal = false;
+      } 
+      board->tableau[line][row].portal = false;
     }
   }
+    if (extension) {
+        int line_portal1 = rand() % TAILLE_TABLEAU_LIGNE;
+        int line_portal2 = rand() % TAILLE_TABLEAU_LIGNE;
+        int row_portal1 = rand() % TAILLE_TABLEAU_COLONNE;
+        int row_portal2 = rand() % TAILLE_TABLEAU_COLONNE;
+        while (line_portal2 == line_portal1 && row_portal2 == row_portal1) {
+            row_portal1 = rand() % TAILLE_TABLEAU_COLONNE;
+            row_portal2 = rand() % TAILLE_TABLEAU_COLONNE;
+        }
+        
+        board->tableau[line_portal1][row_portal1].portal = true;
+        board->tableau[line_portal2][row_portal2].portal = true;
+    }
 
   for (int i = 0; i < NOMBRE_DE_JOUEUR; i++) {
     board->score_array[i] = 0;

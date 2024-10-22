@@ -1,3 +1,4 @@
+#include "logique.h"
 #include "plateau.h"
 #include <stdbool.h>
 #include <stdio.h>
@@ -7,17 +8,20 @@
 int lance_de() { return rand() % TAILLE_TABLEAU_LIGNE + 1; }
 
 void find_other_portal(board_t *board, int line, int row, char herisson) {
-    int portal_found = false;
-    for (int i = 0; i < TAILLE_TABLEAU_LIGNE; i++) {
-        for (int j = 0; j < TAILLE_TABLEAU_COLONNE; j++) {
-            if (i != line && j != row && get_portal(get_cell(board, i, j)) && !portal_found) {
-                board_push(board, i, j, herisson);
-                portal_found = true;
-                break;
-            }
-        }
-        if (portal_found) {break;}
+  int portal_found = false;
+  for (int i = 0; i < TAILLE_TABLEAU_LIGNE; i++) {
+    for (int j = 0; j < TAILLE_TABLEAU_COLONNE; j++) {
+      if (i != line && j != row && get_portal(get_cell(board, i, j)) &&
+          !portal_found) {
+        board_push(board, i, j, herisson);
+        portal_found = true;
+        break;
+      }
     }
+    if (portal_found) {
+      break;
+    }
+  }
 }
 
 void vertical_move(board_t *board, char team) {
@@ -85,10 +89,13 @@ void vertical_move(board_t *board, char team) {
                               row_array_position) <=
                  TAILLE_MAX_PILE_HERISSON - 1) {
         herisson = board_pop(board, line_array_position, row_array_position);
-        if (get_portal(get_cell(board, line_array_position - 1, row_array_position))) {
-            find_other_portal(board, line_array_position - 1, row_array_position, herisson);
-        } else board_push(board, line_array_position - 1, row_array_position,
-                   herisson);
+        if (get_portal(
+                get_cell(board, line_array_position - 1, row_array_position))) {
+          find_other_portal(board, line_array_position - 1, row_array_position,
+                            herisson);
+        } else
+          board_push(board, line_array_position - 1, row_array_position,
+                     herisson);
         printf("Hérisson déplacé avec succès vers le haut !\n");
         break;
       } else {
@@ -190,14 +197,14 @@ void forward_move(board_t *board, int line, char team) {
     } else if (row_index == TAILLE_TABLEAU_COLONNE - 1) {
       printf(
           "Impossible de déplacer des hérissons qui sont arrivés à la fin\n");
-      valid_input = false; 
+      valid_input = false;
       continue;
     } else {
       hedgehog = board_pop(board, line - 1, row_index);
       if (get_portal(get_cell(board, line - 1, row_index + 1))) {
         find_other_portal(board, line - 1, row_index + 1, hedgehog);
-      } 
-      else board_push(board, line - 1, row_index + 1, hedgehog);
+      } else
+        board_push(board, line - 1, row_index + 1, hedgehog);
       printf("Le herisson a avancé d'une case ! \n");
       if (row_index == TAILLE_TABLEAU_COLONNE - 2) {
         increase_winning_herisson(board, hedgehog);
@@ -212,8 +219,6 @@ void playgame() {
   int vertical_response;
   bool valid_input = false;
   srand(time(NULL));
-  //board_t *board = create_board();
-  //initgame(board);
   menu_affichage();
   bool extension = false;
 

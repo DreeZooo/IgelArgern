@@ -18,5 +18,5 @@ testUnitaire.o : testUnitaire.c testUnitaire.h
 	gcc $(CFLAGS) -c $<
 
 clean : 
-	rm -f main.o plateau.o program testUnitaire.o logique.o
+	rm -f main.o plateau.o igelArgern testUnitaire.o logique.o
 .PHONY: clean 
